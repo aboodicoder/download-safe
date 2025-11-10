@@ -3,88 +3,77 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Heart Download</title>
+  <title>Heart GIF Downloads</title>
   <style>
-    :root{--bg:#0f172a;--card:#0b1220;--accent:#ff3860}
-    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-    body{display:grid;place-items:center;background:linear-gradient(180deg,#021124 0%, #071b2a 100%);color:#e6eef8}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:28px;border-radius:16px;box-shadow:0 10px 30px rgba(2,6,23,0.6);text-align:center;width:min(520px,92vw)}
-    .heart{width:160px;height:160px;margin:10px auto 18px;display:block}
-    h1{font-size:20px;margin:0 0 8px}
-    p{margin:0 0 16px;color:rgba(230,238,248,0.85)}
-    .controls{display:flex;gap:10px;justify-content:center}
-    button{background:var(--accent);border:0;padding:10px 14px;border-radius:10px;color:white;font-weight:600;cursor:pointer;box-shadow:0 6px 18px rgba(255,56,96,0.18)}
-    button.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent);font-weight:700}
-    small{display:block;margin-top:12px;color:rgba(230,238,248,0.6)}
+    body {
+      margin: 0;
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      background: radial-gradient(circle at center, #111827, #0f172a);
+      color: #f9fafb;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      text-align: center;
+    }
+    main {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 32px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      width: min(90vw, 480px);
+    }
+    img {
+      width: 160px;
+      height: 160px;
+      display: block;
+      margin: 0 auto 16px;
+    }
+    button {
+      background: #ff3b5c;
+      border: none;
+      padding: 12px 20px;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(255, 59, 92, 0.4);
+      margin-top: 10px;
+    }
+    small {
+      display: block;
+      margin-top: 12px;
+      opacity: 0.8;
+    }
   </style>
 </head>
 <body>
-  <main class="card">
-    <!-- Visual heart (inline SVG for preview) -->
-    <svg class="heart" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <linearGradient id="g" x1="0" x2="1">
-          <stop offset="0" stop-color="#ff6b81"/>
-          <stop offset="1" stop-color="#ff2d55"/>
-        </linearGradient>
-        <filter id="s" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="8" stdDeviation="18" flood-color="#ff2d55" flood-opacity="0.18"/>
-        </filter>
-      </defs>
-      <g filter="url(#s)">
-        <path fill="url(#g)" d="M471.7 73.7c-54.5-46-136-38.7-186.6 14.7L256 118.1l-29.1-29.7C186.3 35 104.9 27.6 50.4 73.7-22.6 136 10.3 249.3 132.6 372.4 207.7 447.9 256 493 256 493s48.3-45.1 123.4-120.6C501.7 249.3 534.6 136 471.7 73.7z"/>
-      </g>
-    </svg>
-
-    <h1>Download a Heart</h1>
-    <p>This page automatically downloads a single heart image (SVG). If the automatic download is blocked by the browser, click the button.</p>
-
-    <div class="controls">
-      <button id="downloadBtn">Download Heart</button>
-      <button id="previewBtn" class="secondary">Open in New Tab</button>
-    </div>
-    <small>File name: <strong>heart-emoji.svg</strong></small>
+  <main>
+    <h1>Download 4 Fast-Beating Heart GIFs</h1>
+    <p>The GIF will download automatically. If blocked, use the button below.</p>
+    <button id="downloadBtn">Download Hearts</button>
+    <small>File names: heart1.gif, heart2.gif, heart3.gif, heart4.gif</small>
   </main>
 
   <script>
-    // The SVG we will offer for download. You can change the markup here if you want a different heart.
-    const svgMarkup = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'>
-  <defs>
-    <linearGradient id='g' x1='0' x2='1'>
-      <stop offset='0' stop-color='#ff6b81'/>
-      <stop offset='1' stop-color='#ff2d55'/>
-    </linearGradient>
-  </defs>
-  <path fill='url(#g)' d='M471.7 73.7c-54.5-46-136-38.7-186.6 14.7L256 118.1l-29.1-29.7C186.3 35 104.9 27.6 50.4 73.7-22.6 136 10.3 249.3 132.6 372.4 207.7 447.9 256 493 256 493s48.3-45.1 123.4-120.6C501.7 249.3 534.6 136 471.7 73.7z'/>
-</svg>`;
+    // Base64-encoded smooth fast-beating heart GIF (shortened example, replace with your actual base64 GIF)
+    const heartGIF = "data:image/gif;base64,R0lGODlhEAAQAPQAAP///wAAAMLCwoCAgLy8vICAgLy8vIGBgYWFhb29vcPDw7+/v8TExNfX1+jo6Pj4+M7Ozu7u7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABcALAAAAAAQABAAAAVKICSOZGmeaKqubOtCzPdFIZm2sq27gvH8lkGkYkmZqjSx1lU2MUBgUBVkwBhNgmEEAOw==";
 
-    function triggerDownload(filename = 'heart-emoji.svg', markup = svgMarkup) {
-      const blob = new Blob([markup], {type: 'image/svg+xml;charset=utf-8'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      // release the object URL shortly after download started
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    function downloadHeartFiles() {
+      for (let i = 1; i <= 4; i++) {
+        const a = document.createElement('a');
+        a.href = heartGIF;
+        a.download = `heart${i}.gif`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
     }
 
-    // Auto-trigger download when page is opened.
-    document.addEventListener('DOMContentLoaded', () => {
-      // try to download automatically; some browsers will block auto-downloads
-      try { triggerDownload(); } catch(e) { /* fail silently */ }
-
-      // wire controls
-      document.getElementById('downloadBtn').addEventListener('click', () => triggerDownload());
-      document.getElementById('previewBtn').addEventListener('click', () => {
-        const blob = new Blob([svgMarkup], {type: 'image/svg+xml;charset=utf-8'});
-        const url = URL.createObjectURL(blob);
-        window.open(url, '_blank');
-        setTimeout(() => URL.revokeObjectURL(url), 2000);
-      });
+    // Auto-trigger downloads on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      try { downloadHeartFiles(); } catch(e) {}
+      document.getElementById('downloadBtn').addEventListener('click', downloadHeartFiles);
     });
   </script>
 </body>
