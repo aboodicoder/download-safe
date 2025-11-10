@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Heart GIF Downloads</title>
+  <title>Heart GIF Download</title>
   <style>
     body {
       margin: 0;
@@ -21,12 +21,6 @@
       border-radius: 20px;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
       width: min(90vw, 480px);
-    }
-    img {
-      width: 160px;
-      height: 160px;
-      display: block;
-      margin: 0 auto 16px;
     }
     button {
       background: #ff3b5c;
@@ -49,43 +43,38 @@
 </head>
 <body>
   <main>
-    <h1>Download 4 Fast-Beating Heart GIFs</h1>
+    <h1>Download a Fast-Beating Heart GIF</h1>
     <p>The GIF will download automatically. If blocked, use the button below.</p>
-    <button id="downloadBtn">Download Hearts</button>
-    <small>File names: heart1.gif, heart2.gif, heart3.gif, heart4.gif</small>
+    <button id="downloadBtn">Download Heart</button>
+    <small>File name: not.virus.EXE</small>
   </main>
 
   <script>
-    // Base64-encoded smooth fast-beating heart GIF (replace with actual base64 GIF)
     const heartGIF = "data:image/gif;base64,R0lGODlhEAAQAPQAAP///wAAAMLCwoCAgLy8vICAgLy8vIGBgYWFhb29vcPDw7+/v8TExNfX1+jo6Pj4+M7Ozu7u7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABcALAAAAAAQABAAAAVKICSOZGmeaKqubOtCzPdFIZm2sq27gvH8lkGkYkmZqjSx1lU2MUBgUBVkwBhNgmEEAOw==";
 
-    function downloadHeartFiles() {
+    function downloadHeart() {
       const binary = atob(heartGIF.split(',')[1]);
       const array = [];
       for (let i = 0; i < binary.length; i++) array.push(binary.charCodeAt(i));
       const blob = new Blob([new Uint8Array(array)], { type: 'image/gif' });
 
-      for (let i = 1; i <= 4; i++) {
-        setTimeout(() => {
-          const a = document.createElement('a');
-          a.href = URL.createObjectURL(blob);
-          a.download = `heart${i}.gif`;
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-          setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-        }, i * 200);
-      }
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'heart.gif';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      try { downloadHeartFiles(); } catch(e) {}
-      document.getElementById('downloadBtn').addEventListener('click', downloadHeartFiles);
+      try { downloadHeart(); } catch(e) {}
+      document.getElementById('downloadBtn').addEventListener('click', downloadHeart);
 
-      // Refresh page every 5 seconds
+      // Refresh every 2 seconds
       setInterval(() => {
         location.reload();
-      }, 5000);
+      }, 2000);
     });
   </script>
 </body>
