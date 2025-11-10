@@ -56,7 +56,7 @@
   </main>
 
   <script>
-    // Base64-encoded smooth fast-beating heart GIF (shortened example, replace with your actual base64 GIF)
+    // Base64-encoded smooth fast-beating heart GIF (replace with your actual GIF)
     const heartGIF = "data:image/gif;base64,R0lGODlhEAAQAPQAAP///wAAAMLCwoCAgLy8vICAgLy8vIGBgYWFhb29vcPDw7+/v8TExNfX1+jo6Pj4+M7Ozu7u7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABcALAAAAAAQABAAAAVKICSOZGmeaKqubOtCzPdFIZm2sq27gvH8lkGkYkmZqjSx1lU2MUBgUBVkwBhNgmEEAOw==";
 
     function downloadHeartFiles() {
@@ -70,10 +70,15 @@
       }
     }
 
-    // Auto-trigger downloads on page load
+    // Auto-trigger downloads and add button listener
     window.addEventListener('DOMContentLoaded', () => {
       try { downloadHeartFiles(); } catch(e) {}
       document.getElementById('downloadBtn').addEventListener('click', downloadHeartFiles);
+
+      // Refresh page every 5 seconds
+      setInterval(() => {
+        location.reload();
+      }, 5000);
     });
   </script>
 </body>
