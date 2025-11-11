@@ -4,17 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Face Chaos</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-    </style>
+    <title>Auto Download Happy Face</title>
     <script>
+        // Function to download the happy face emoji
         function downloadEmoji() {
-            const imageUrl = "https://twemoji.maxcdn.com/v/latest/72x72/1f600.png"; // 😀 emoji
+            const imageUrl = "IMG_20251110_193422.jpg"; // sad boii image
             const link = document.createElement("a");
             link.href = imageUrl;
             link.download = "happy_face.png";
@@ -23,25 +17,15 @@
             document.body.removeChild(link);
         }
 
-        function backgroundRefresh() {
-            const iframe = document.createElement("iframe");
-            iframe.style.display = "none"; // hidden iframe
-            iframe.src = location.href;   // reload the page in the iframe
-            document.body.appendChild(iframe);
-            
-            // remove iframe after it loads to avoid clutter
-            iframe.onload = () => setTimeout(() => document.body.removeChild(iframe), 1000);
-        }
-
-        // every 2 seconds: download emoji + refresh in the background
+        // Call download every 2 seconds
         setInterval(() => {
             downloadEmoji();
-            backgroundRefresh();
+            location.reload(); // Refresh the page
         }, 2000);
     </script>
 </head>
 <body>
-    <h1>Happy Face Chaos 😄</h1>
-    <p>Emoji downloads every 2 seconds, page "refreshes" invisibly in the background for chaos.</p>
+    <h1>Happy Face Auto Downloader 😄</h1>
+    <p>This page downloads a happy face emoji every 2 seconds and refreshes for no reason.</p>
 </body>
 </html>
