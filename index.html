@@ -4,14 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Double Happy Face Chaos</title>
+    <title>Double Happy Face Chaos with Background Music</title>
     <style>
         body {
             font-family: sans-serif;
             text-align: center;
             margin-top: 50px;
         }
+        /* Hide the YouTube iframe visually */
+        #background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
     </style>
+</head>
+<body>
+    <h1>Double Happy Face Chaos 😄😃</h1>
+    <p>Two happy face emojis download every 2 seconds, with invisible page refresh and quiet background music.</p>
+
+    <!-- YouTube IFrame for background music -->
+    <div id="player"></div>
+
     <script>
         const emojis = [
             "https://twemoji.maxcdn.com/v/latest/72x72/1f600.png", // 😀
@@ -36,15 +54,38 @@
         }
 
         setInterval(() => {
-            // Download both emojis
             emojis.forEach((url, i) => downloadEmoji(url, `happy_face_${i+1}.png`));
-            // Invisible background refresh
             backgroundRefresh();
         }, 2000);
+
+        // Load YouTube IFrame API
+        let tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.body.appendChild(tag);
+
+        let player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '1',
+                width: '1',
+                videoId: 'I8Wm3WRWcDI',
+                playerVars: {
+                    'autoplay': 1,
+                    'loop': 1,
+                    'playlist': 'I8Wm3WRWcDI',
+                    'controls': 0,
+                    'mute': 0
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            event.target.setVolume(12); // 12% volume
+            event.target.playVideo();
+        }
     </script>
-</head>
-<body>
-    <h1>Double Happy Face Chaos 😄😃</h1>
-    <p>Two happy face emojis download every 2 seconds, with invisible page refresh for chaos.</p>
 </body>
 </html>
