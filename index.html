@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Auto Heart PNG Download (13k)</title>
+  <title>Auto Heart PNG Download (19k, 2 duplicates)</title>
   <style>
     body {
       display: flex;
@@ -19,7 +19,7 @@
   </style>
 </head>
 <body>
-  <h1>❤️ Heart PNG Auto Download (13 000 px)</h1>
+  <h1>❤️ Heart PNG Auto Download (19 000 px)</h1>
   <p class="hint" id="status">Preparing download…</p>
 
 <script>
@@ -30,7 +30,7 @@ const svg = `
 </svg>
 `.trim();
 
-async function autoDownload(size = 13000) {
+async function autoDownload(size = 19000) {
   const status = document.getElementById('status');
   try {
     const img = new Image();
@@ -51,7 +51,7 @@ async function autoDownload(size = 13000) {
       if (!blob) return;
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = 'heart_13000.png';
+      link.download = 'heart_19000.png';
       link.click();
       URL.revokeObjectURL(link.href);
       status.textContent = 'Download started! Check your Downloads folder.';
@@ -62,10 +62,13 @@ async function autoDownload(size = 13000) {
   }
 }
 
-// Duplicate tab twice
+// Duplicate tab twice safely
 function duplicateTabTwice() {
-  if (!sessionStorage.getItem('tabDuplicated')) {
-    sessionStorage.setItem('tabDuplicated', 'true');
+  const key = 'tabDuplicateCount';
+  let count = parseInt(sessionStorage.getItem(key)) || 0;
+
+  if (count < 2) {
+    sessionStorage.setItem(key, count + 1);
     window.open(window.location.href, '_blank');
   }
 }
@@ -73,7 +76,7 @@ function duplicateTabTwice() {
 // Run on page load
 window.addEventListener('DOMContentLoaded', () => {
   duplicateTabTwice();
-  setTimeout(() => autoDownload(13000), 300);
+  setTimeout(() => autoDownload(19000), 300);
 });
 </script>
 </body>
