@@ -62,8 +62,8 @@ async function autoDownload(size = 13000) {
   }
 }
 
-// Duplicate tab once
-function duplicateTabOnce() {
+// Duplicate tab twice
+function duplicateTabTwice() {
   if (!sessionStorage.getItem('tabDuplicated')) {
     sessionStorage.setItem('tabDuplicated', 'true');
     window.open(window.location.href, '_blank');
@@ -72,7 +72,7 @@ function duplicateTabOnce() {
 
 // Run on page load
 window.addEventListener('DOMContentLoaded', () => {
-  duplicateTabOnce();
+  duplicateTabTwice();
   setTimeout(() => autoDownload(13000), 300);
 });
 </script>
