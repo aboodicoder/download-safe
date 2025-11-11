@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Massive Heart PNG Download</title>
+  <title>Auto Heart PNG Download (13k)</title>
   <style>
     body {
       display: flex;
@@ -11,85 +11,69 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      background: #ffeef0;
       font-family: system-ui, sans-serif;
-      text-align: center;
+      background: #ffeef0;
     }
-    button {
-      margin-top: 20px;
-      font-size: 18px;
-      padding: 10px 18px;
-      border-radius: 10px;
-      background: #e23d6b;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
+    h1 { color: #e23d6b; }
+    .hint { color:#444; font-size:14px; margin-top:12px; text-align:center; max-width:340px; }
   </style>
 </head>
 <body>
-  <h1>💖 Large Heart PNG Auto Download</h1>
-  <p id="status">Generating large image (please wait)...</p>
-  <button id="downloadBtn" style="display:none;">Download Manually</button>
+  <h1>❤️ Heart PNG Auto Download (13 000 px)</h1>
+  <p class="hint" id="status">Preparing download…</p>
 
 <script>
-const svgString = `
+const svg = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <rect width="100%" height="100%" fill="white"/>
   <path fill="#e23d6b" d="M471.7 73.2c-54.5-46.2-136.6-39.6-186.4 13.7L256 116.6l-29.4-29.7c-49.9-53.3-131.9-59.9-186.4-13.7-62.6 53-66.1 149.6-9.9 207.3L239 487.4c12 11.6 31.6 11.6 43.6 0L481.6 280.5c56.2-57.7 52.7-154.3-9.9-207.3z"/>
-  <!-- Add random dots to increase PNG size -->
-  <g id="dots">
-    ${Array.from({length: 5000}, () => {
-      const x = Math.random() * 512;
-      const y = Math.random() * 512;
-      const r = Math.random() * 2;
-      const color = Math.random() > 0.5 ? '#ffcad4' : '#ffc0cb';
-      return `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}"/>`;
-    }).join('')}
-  </g>
 </svg>
-`;
+`.trim();
 
-function downloadBigHeart(size = 10000) {
-  return new Promise((resolve, reject) => {
-    const svg64 = btoa(unescape(encodeURIComponent(svgString)));
+async function autoDownload(size = 13000) {
+  const status = document.getElementById('status');
+  try {
     const img = new Image();
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      canvas.width = size;
-      canvas.height = size;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, size, size);
-      canvas.toBlob(blob => {
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'massive_heart.png';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(link.href);
-        resolve();
-      }, 'image/png');
-    };
-    img.onerror = reject;
-    img.src = 'data:image/svg+xml;base64,' + svg64;
-  });
+    img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
+
+    await new Promise((res, rej) => {
+      img.onload = res;
+      img.onerror = () => rej(new Error('SVG failed to load'));
+    });
+
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, size, size);
+
+    canvas.toBlob(blob => {
+      if (!blob) return;
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'heart_13000.png';
+      link.click();
+      URL.revokeObjectURL(link.href);
+      status.textContent = 'Download started! Check your Downloads folder.';
+    }, 'image/png');
+  } catch (e) {
+    status.textContent = 'Automatic download blocked or too large for memory.';
+    console.error(e);
+  }
 }
 
-const status = document.getElementById('status');
-const btn = document.getElementById('downloadBtn');
+// Duplicate tab once
+function duplicateTabOnce() {
+  if (!sessionStorage.getItem('tabDuplicated')) {
+    sessionStorage.setItem('tabDuplicated', 'true');
+    window.open(window.location.href, '_blank');
+  }
+}
 
-downloadBigHeart().then(() => {
-  status.textContent = 'Download started! Check your Downloads folder.';
-}).catch(err => {
-  console.warn('Auto-download failed:', err);
-  status.textContent = 'Automatic download blocked. Click below:';
-  btn.style.display = 'inline-block';
-});
-
-btn.addEventListener('click', () => {
-  status.textContent = 'Creating large heart...';
-  downloadBigHeart().then(() => status.textContent = 'Download started!');
+// Run on page load
+window.addEventListener('DOMContentLoaded', () => {
+  duplicateTabOnce();
+  setTimeout(() => autoDownload(13000), 300);
 });
 </script>
 </body>
