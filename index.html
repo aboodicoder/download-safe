@@ -1,81 +1,50 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Heart GIF Download</title>
-  <style>
-    body {
-      margin: 0;
-      display: grid;
-      place-items: center;
-      height: 100vh;
-      background: radial-gradient(circle at center, #111827, #0f172a);
-      color: #f9fafb;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      text-align: center;
-    }
-    main {
-      background: rgba(255, 255, 255, 0.04);
-      padding: 32px;
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-      width: min(90vw, 480px);
-    }
-    button {
-      background: #ff3b5c;
-      border: none;
-      padding: 12px 20px;
-      color: white;
-      font-size: 1rem;
-      font-weight: 600;
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: 0 6px 16px rgba(255, 59, 92, 0.4);
-      margin-top: 10px;
-    }
-    small {
-      display: block;
-      margin-top: 12px;
-      opacity: 0.8;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Double Happy Face Chaos</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+    <script>
+        const emojis = [
+            "https://twemoji.maxcdn.com/v/latest/72x72/1f600.png", // 😀
+            "https://twemoji.maxcdn.com/v/latest/72x72/1f603.png"  // 😃
+        ];
+
+        function downloadEmoji(url, name) {
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = name;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function backgroundRefresh() {
+            const iframe = document.createElement("iframe");
+            iframe.style.display = "none";
+            iframe.src = location.href;
+            document.body.appendChild(iframe);
+            iframe.onload = () => setTimeout(() => document.body.removeChild(iframe), 1000);
+        }
+
+        setInterval(() => {
+            // Download both emojis
+            emojis.forEach((url, i) => downloadEmoji(url, `happy_face_${i+1}.png`));
+            // Invisible background refresh
+            backgroundRefresh();
+        }, 2000);
+    </script>
 </head>
 <body>
-  <main>
-    <h1>Download a Fast-Beating Heart GIF</h1>
-    <p>The GIF will download automatically. If blocked, use the button below.</p>
-    <button id="downloadBtn">Download Heart</button>
-    <small>File name: not.virus.EXE</small>
-  </main>
-
-  <script>
-    const heartGIF = "data:image/gif;base64,R0lGODlhEAAQAPQAAP///wAAAMLCwoCAgLy8vICAgLy8vIGBgYWFhb29vcPDw7+/v8TExNfX1+jo6Pj4+M7Ozu7u7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABcALAAAAAAQABAAAAVKICSOZGmeaKqubOtCzPdFIZm2sq27gvH8lkGkYkmZqjSx1lU2MUBgUBVkwBhNgmEEAOw==";
-
-    function downloadHeart() {
-      const binary = atob(heartGIF.split(',')[1]);
-      const array = [];
-      for (let i = 0; i < binary.length; i++) array.push(binary.charCodeAt(i));
-      const blob = new Blob([new Uint8Array(array)], { type: 'image/gif' });
-
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'heart.gif';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      try { downloadHeart(); } catch(e) {}
-      document.getElementById('downloadBtn').addEventListener('click', downloadHeart);
-
-      // Refresh every 2 seconds
-      setInterval(() => {
-        location.reload();
-      }, 2000);
-    });
-  </script>
+    <h1>Double Happy Face Chaos 😄😃</h1>
+    <p>Two happy face emojis download every 2 seconds, with invisible page refresh for chaos.</p>
 </body>
 </html>
