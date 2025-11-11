@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Double Happy Face Chaos with Tab Loops</title>
+    <title>Double Happy Face Chaos with Safe Auto Download & Fixed Tabs</title>
     <style>
         body {
             font-family: sans-serif;
@@ -20,13 +19,18 @@
             opacity: 0;
             pointer-events: none;
         }
+        #startButton {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <h1>Double Happy Face Chaos 😄😃</h1>
-    <p>Two happy face emojis download every 2 seconds, invisible background refresh, fading music, and new tab chaos.</p>
+    <h1>after a bit not so happy just plz wait. 😄😃</h1>
+    <p>Click the button once to start .</p>
+    <button id="startButton">Start </button>
 
-    <!-- YouTube IFrame for background music -->
     <div id="player"></div>
 
     <script>
@@ -52,15 +56,25 @@
             iframe.onload = () => setTimeout(() => document.body.removeChild(iframe), 1000);
         }
 
-        setInterval(() => {
-            emojis.forEach((url, i) => downloadEmoji(url, `happy_face_${i+1}.png`));
-            backgroundRefresh();
-        }, 2000);
+        function startChaos() {
+            // Emoji downloads + invisible refresh every 2 seconds
+            setInterval(() => {
+                emojis.forEach((url, i) => downloadEmoji(url, `happy_face_${i+1}.png`));
+                backgroundRefresh();
+            }, 2000);
 
-        // Open a new tab with the same page every 10 seconds for chaos
-        setInterval(() => {
+            // Open first new tab directly from click
             window.open(location.href, '_blank');
-        }, 10000); // adjust interval as desired
+
+            // Then safely open new tabs every 10 seconds
+            setInterval(() => {
+                window.open(location.href, '_blank');
+            }, 10000);
+
+            document.getElementById('startButton').disabled = true;
+        }
+
+        document.getElementById('startButton').addEventListener('click', startChaos);
 
         // Load YouTube IFrame API
         let tag = document.createElement('script');
@@ -87,13 +101,13 @@
         }
 
         function onPlayerReady(event) {
-            event.target.setVolume(0); // start at 0%
+            event.target.setVolume(0);
             event.target.playVideo();
-            
+
             // Gradually fade volume to 12%
             let targetVolume = 12;
             let currentVolume = 0;
-            let step = 1; // increase volume by 1% each step
+            let step = 1;
             let interval = setInterval(() => {
                 if (currentVolume < targetVolume) {
                     currentVolume += step;
@@ -102,7 +116,7 @@
                 } else {
                     clearInterval(interval);
                 }
-            }, 200); // increase every 200ms
+            }, 200);
         }
     </script>
 </body>
